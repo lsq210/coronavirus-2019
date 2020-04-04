@@ -1,168 +1,163 @@
 .number-board {
   position: absolute;
-  top: 0px;
+  top: 20px;
   left: 20px;
   text-shadow: 1px 1px 2px rgba(0,0,0,.8);
   color: #fff;
-  font-size: 34px;
+  font-size: 38px;
 }
 .board-container {
   position: absolute;
-  top: 90px;
-  left: 20px;
-}
-.confirm {
-  width: 100%;
-  margin-right: 10px;
-  position: relative;
-  .title-confirm {
-    background: rgba(251,103,103,.5);
-    text-align: left;
-    color: #fff;
-    margin: 10px 10px 0 0;
-    position: relative;
-    padding: 5px 0 5px 10px;
-    font-size: 16px;
-    line-height: 16px;
-    font-weight: 700;
-    border-left: 5px solid #fb6767;
-    text-shadow: 1px 1px 1px #000, 1px 1px 1px #fff;
-    &:before {
-      position: absolute;
-      right: -10px;
-      bottom: 0;
-      content: "";
-      border-bottom: 5px solid rgba(251,103,103,.5);
-      border-right: 5px solid rgba(251,103,103,.5);
-      border-color: rgba(251,103,103,.5) transparent transparent rgba(251,103,103,.5);
-      border-style: solid;
-      border-width: 5px;
-      width: 0;
-      height: 0;
-      pointer-events: none;
-    }
-    &:after {
-      position: absolute;
-      right: -10px;
-      bottom: 10px;
-      top: 0;
-      content: "";
+  .confirm {
+    .title-confirm {
       background: rgba(251,103,103,.5);
-      width: 10px;
-      pointer-events: none;
-    }
-  }
-  .number-confirm {
-    font-size: 30px;
-    margin: 5px 0;
-    color: #f99;
-    font-family: Orbitron;
-  }
-  .globe-confirm {
-    margin: 0;
-    font-size: 14px;
-    color: #eee;
-  }
-}
-.cure {
-  margin-top: 20px;
-  .title-cure {
-    background: rgba(40,218,111,.5);
-    text-align: left;
-    color: #fff;
-    margin: 10px 10px 0 0;
-    position: relative;
-    padding: 5px 0 5px 10px;
-    font-size: 16px;
-    line-height: 16px;
-    font-weight: 700;
-    border-left: 5px solid #28da6f;
-    text-shadow: 1px 1px 1px #000, 1px 1px 1px #fff;
-    &:before {
-      position: absolute;
-      right: -10px;
-      bottom: 0;
-      content: "";
-      border-bottom: 5px solid rgba(40,218,111,.5);
-      border-right: 5px solid rgba(40,218,111,.5);
-      border-color: rgba(40,218,111,.5) transparent transparent rgba(40,218,111,.5);
-      border-style: solid;
-      border-width: 5px;
-      width: 0;
-      height: 0;
-      pointer-events: none;
-    }
-    &:after {
-      position: absolute;
-      right: -10px;
-      bottom: 10px;
-      top: 0;
-      content: "";
-      background: rgba(40,218,111,.5);
-      width: 10px;
-      pointer-events: none;
+      text-align: left;
+      color: #fff;
+      margin: 10px 10px 0 0;
+      position: relative;
+      padding: 5px 0 5px 10px;
+      font-size: 16px;
+      line-height: 16px;
+      font-weight: 700;
+      border-left: 5px solid #fb6767;
+      text-shadow: 1px 1px 1px #000, 1px 1px 1px #fff;
+      &:before {
+        position: absolute;
+        right: -10px;
+        bottom: 0;
+        content: "";
+        border-bottom: 5px solid rgba(251,103,103,.5);
+        border-right: 5px solid rgba(251,103,103,.5);
+        border-color: rgba(251,103,103,.5) transparent transparent rgba(251,103,103,.5);
+        border-style: solid;
+        border-width: 5px;
+        width: 0;
+        height: 0;
+        pointer-events: none;
       }
-  }
-  .number-cure {
-    font-size: 30px;
-    margin: 5px 0;
-    color: #28ca68;
-    font-family: Orbitron;
-  }
-  .globe-cure {
-    margin: 0;
-    font-size: 14px;
-    color: #eee;
-  }
-}
-.death {
-  margin-top: 20px;
-  .title-death {
-    background: rgba(148,159,165,.5);
-    text-align: left;
-    color: #fff;
-    margin: 10px 10px 0 0;
-    position: relative;
-    padding: 5px 0 5px 10px;
-    font-size: 16px;
-    line-height: 16px;
-    font-weight: 700;
-    border-left: 5px solid #949fa5;
-    text-shadow: 1px 1px 1px #000, 1px 1px 1px #fff;
-    &:before {
-      position: absolute;
-      right: -10px;
-      bottom: 0;
-      content: "";
-      border-bottom: 5px solid rgba(148,159,165,.5);
-      border-right: 5px solid rgba(148,159,165,.5);
-      border-color: rgba(148,159,165,.5) transparent transparent rgba(148,159,165,.5);
-      border-style: solid;
-      border-width: 5px;
-      width: 0;
-      height: 0;
-      pointer-events: none;
+      &:after {
+        position: absolute;
+        right: -10px;
+        bottom: 10px;
+        top: 0;
+        content: "";
+        background: rgba(251,103,103,.5);
+        width: 10px;
+        pointer-events: none;
+      }
     }
-    &:after {
-      position: absolute;
-      right: -10px;
-      bottom: 10px;
-      top: 0;
-      content: "";
+    .number-confirm {
+      font-size: 30px;
+      margin: 5px 0;
+      color: #f99;
+      font-family: Orbitron;
+    }
+    .globe-confirm {
+      margin: 0;
+      font-size: 14px;
+      color: #eee;
+    }
+  }
+  .cure {
+    .title-cure {
+      background: rgba(40,218,111,.5);
+      text-align: left;
+      color: #fff;
+      margin: 10px 10px 0 0;
+      position: relative;
+      padding: 5px 0 5px 10px;
+      font-size: 16px;
+      line-height: 16px;
+      font-weight: 700;
+      border-left: 5px solid #28da6f;
+      text-shadow: 1px 1px 1px #000, 1px 1px 1px #fff;
+      &:before {
+        position: absolute;
+        right: -10px;
+        bottom: 0;
+        content: "";
+        border-bottom: 5px solid rgba(40,218,111,.5);
+        border-right: 5px solid rgba(40,218,111,.5);
+        border-color: rgba(40,218,111,.5) transparent transparent rgba(40,218,111,.5);
+        border-style: solid;
+        border-width: 5px;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+      }
+      &:after {
+        position: absolute;
+        right: -10px;
+        bottom: 10px;
+        top: 0;
+        content: "";
+        background: rgba(40,218,111,.5);
+        width: 10px;
+        pointer-events: none;
+        }
+    }
+    .number-cure {
+      font-size: 30px;
+      margin: 5px 0;
+      color: #28ca68;
+      font-family: Orbitron;
+    }
+    .globe-cure {
+      margin: 0;
+      font-size: 14px;
+      color: #eee;
+    }
+  }
+  .death {
+    margin-top: 20px;
+    .title-death {
       background: rgba(148,159,165,.5);
-      width: 10px;
-      pointer-events: none;
+      text-align: left;
+      color: #fff;
+      margin: 10px 10px 0 0;
+      position: relative;
+      padding: 5px 0 5px 10px;
+      font-size: 16px;
+      line-height: 16px;
+      font-weight: 700;
+      border-left: 5px solid #949fa5;
+      text-shadow: 1px 1px 1px #000, 1px 1px 1px #fff;
+      &:before {
+        position: absolute;
+        right: -10px;
+        bottom: 0;
+        content: "";
+        border-bottom: 5px solid rgba(148,159,165,.5);
+        border-right: 5px solid rgba(148,159,165,.5);
+        border-color: rgba(148,159,165,.5) transparent transparent rgba(148,159,165,.5);
+        border-style: solid;
+        border-width: 5px;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+      }
+      &:after {
+        position: absolute;
+        right: -10px;
+        bottom: 10px;
+        top: 0;
+        content: "";
+        background: rgba(148,159,165,.5);
+        width: 10px;
+        pointer-events: none;
+      }
+    }
+    .number-death {
+      font-size: 30px;
+      margin: 5px 0;
+      color: #dadada;
+      font-family: Orbitron;
+    }
+    .globe-death {
+      margin: 0;
+      font-size: 14px;
+      color: #eee;
     }
   }
-  .number-death {
-    font-size: 30px;
-    margin: 5px 0;
-    color: #dadada;
-    font-family: Orbitron;
-  }
-  .globe-death {
-    margin: 0;
-    font-size: 14px;
-    color: #eee;
-  }
 }
+

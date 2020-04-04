@@ -25,9 +25,10 @@ class Charts extends Component {
           }
         },
         grid: {
-          left: '3%',
+          left: '-2%',
           right: '4%',
-          bottom: '3%',
+          bottom: '2%',
+          top: '24%',
           containLabel: true
         },
         xAxis: [
@@ -71,7 +72,10 @@ class Charts extends Component {
   render() {
     return (
       <div className="charts">
-        <ReactEcharts ref='echartsInstance' option={this.state.option} />
+        <ReactEcharts
+          ref='echartsInstance'
+          option={this.state.option}
+          style={{ height: '130px', width: '300px' }} />
       </div>
     )
   };
