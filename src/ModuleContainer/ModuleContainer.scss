@@ -12,7 +12,7 @@
     background: rgba(100,191,255,.3);
     text-align: left;
     color: #fff;
-    margin: 0 10px 0 0;
+    margin: 0 10px 4px 0;
     position: relative;
     padding: 5px 0 5px 10px;
     font-size: 16px;
@@ -66,6 +66,10 @@
   box-sizing: border-box;
   color: #ccc;
   line-height: 18px;
+  &:hover {
+    border: 1px solid #7a7e84;
+    background: rgba(33,36,37,.62);
+  }
 }
 .hidden {
   display: none;
@@ -77,4 +81,12 @@
 .layers {
   right: 20px;
   bottom: 30px;
+}
+.data {
+  right: 20px;
+  top: 180px;
+}
+.time {
+  right: 20px;
+  top: 60px;
 }

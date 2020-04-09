@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import './App.css';
 import Map from './Map/Map';
 import ModuleContainer from './ModuleContainer/ModuleContainer';
 import Layers from './Modules/Layers/Layers';
 import Charts from './Modules/Charts/Charts';
 import Data from './Modules/Data/Data';
+import Time from './Modules/Time/Time';
 import NumberBoard from './NumberBoard/NumberBoard';
+import './App.css';
 
 class App extends Component {
   constructor(props) {
@@ -31,6 +32,9 @@ class App extends Component {
         </ModuleContainer>
         <ModuleContainer className="data" title="统计数据">
           <Data></Data>
+        </ModuleContainer>
+        <ModuleContainer className="time" title="时间穿梭">
+          <Time></Time>
         </ModuleContainer>
       </div>
     )

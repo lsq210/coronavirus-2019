@@ -1,0 +1,39 @@
+.data-container {
+  width: 380px;
+  .data-change {
+    padding: 2px 0;
+    height: 30px;
+    box-sizing: border-box;
+    font-size: 14px;
+    border-bottom: 1px solid #333;
+    span {
+      color: #fff;
+    }
+  }
+}
+.ant-table {
+  background: transparent !important;
+  color: #fff !important;
+}
+.ant-table-thead {
+  tr {
+    th {
+      background: transparent !important;
+      color: #fff !important;
+    }
+  }
+}
+.ant-table-tbody {
+  tr {
+    td {
+      background: transparent !important;
+    }
+  }
+}
+.trow {
+  background: transparent !important;
+  color: #fff !important;
+  &:hover {
+    background: rgba(100,191,255,.3) !important;
+  }
+}

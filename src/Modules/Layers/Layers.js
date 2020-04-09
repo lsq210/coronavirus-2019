@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Checkbox } from 'antd';
+import './Layers.scss';
 
 const options = [
   { label: '热力图', value: 'heatmap' },
@@ -9,16 +10,13 @@ const options = [
 ];
 
 class Layers extends Component {
-  constructor(props) {
-    super(props);
-  };
   changeLayer = (checkedValues) => {
     console.log('checked = ', checkedValues);
     this.props.changeLayer(checkedValues);
   }
   render() {
     return (
-      <div>
+      <div className="layer-container">
         <Checkbox.Group options={options} defaultValue={['heatmap']} onChange={this.changeLayer} />
       </div>
     )

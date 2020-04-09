@@ -17,7 +17,10 @@ class Charts extends Component {
           }
         },
         legend: {
-          data: ['确诊', '治愈', '死亡']
+          data: ['确诊', '死亡', '治愈'],
+          textStyle: {
+            color: '#fff'
+          }
         },
         toolbox: {
           feature: {
@@ -25,7 +28,7 @@ class Charts extends Component {
           }
         },
         grid: {
-          left: '-2%',
+          left: '2%',
           right: '4%',
           bottom: '2%',
           top: '24%',
@@ -35,12 +38,22 @@ class Charts extends Component {
           {
             type: 'category',
             boundaryGap: false,
-            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+            axisLabel: {
+              textStyle: {
+                color: '#fff'
+              }
+            }
           }
         ],
         yAxis: [
           {
-            type: 'value'
+            type: 'value',
+            axisLabel: {
+              textStyle: {
+                color: '#fff'
+              }
+            }
           }
         ],
         series: [
@@ -75,7 +88,7 @@ class Charts extends Component {
         <ReactEcharts
           ref='echartsInstance'
           option={this.state.option}
-          style={{ height: '130px', width: '300px' }} />
+          style={{ height: '140px', width: '380px' }} />
       </div>
     )
   };
