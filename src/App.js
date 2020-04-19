@@ -1,29 +1,38 @@
 import React, { Component } from 'react';
 import Map from './Map/Map';
+import NumberBoard from './NumberBoard/NumberBoard';
 import ModuleContainer from './ModuleContainer/ModuleContainer';
 import Layers from './Modules/Layers/Layers';
 import Charts from './Modules/Charts/Charts';
 import Data from './Modules/Data/Data';
-import Time from './Modules/Time/Time';
-import NumberBoard from './NumberBoard/NumberBoard';
+import TimePlayer from './Modules/Time/Time';
+import Location from './Modules/Location/Location'
+import geoJson from './data/overall.json'
 import './App.css';
-
+import moment from 'moment';
+const allData = geoJson.features;
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      layers: ['']
+      layers: [''],
+      allData: null,
+      date: new moment().format('YYYY-MM-DD'),
+      countryData: null
     }
   };
   changeLayer = (checkedValues) => {
-    this.setState({ layers: checkedValues })
-    console.log('layers', this.state.layers)
-  };
+    this.setState({ layers: checkedValues });
+  }
+  changeTime = (index, value) => {
+    this.setState({ date: moment(value, 'YYYY/MM/DD').format('YYYY-MM-DD') });
+    console.log(this.state.date);
+  }
   render() {
     return (
       <div>
-        <Map layers={this.state.layers}></Map>
-        <NumberBoard></NumberBoard>
+        <Map layers={this.state.layers} data={allData.filter(e => e.properties.date === this.state.date && !e.properties.province)}></Map>
+        <NumberBoard date={this.state.date}></NumberBoard>
         <ModuleContainer className="layers" title="图层选择">
           <Layers changeLayer={this.changeLayer}></Layers>
         </ModuleContainer>
@@ -31,10 +40,13 @@ class App extends Component {
           <Charts></Charts>
         </ModuleContainer>
         <ModuleContainer className="data" title="统计数据">
-          <Data></Data>
+          <Data date={this.state.date}></Data>
         </ModuleContainer>
         <ModuleContainer className="time" title="时间穿梭">
-          <Time></Time>
+          <TimePlayer onChange={this.changeTime}></TimePlayer>
+        </ModuleContainer>
+        <ModuleContainer className="location" title="地区查询">
+          <Location></Location>
         </ModuleContainer>
       </div>
     )

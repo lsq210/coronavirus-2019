@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
 import GeojsonData from '../data/all.geojson'
 import { addHeatMap } from './layers/heatmap'
@@ -24,6 +25,10 @@ class Map extends Component {
     addHeatMap(this.map, GeojsonData);
     addCluster(this.map, GeojsonData);
     addCategory(this.map, GeojsonData);
+    // axios.get('https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv')
+    //   .then((response) => {
+    //     console.log(response.data)
+    //   })
   };
   componentDidUpdate(prevProps) {
     console.log('this.props.layers', this.props.layers);
