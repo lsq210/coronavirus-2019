@@ -10,14 +10,13 @@ import Location from './Modules/Location/Location'
 import geoJson from './data/overall.json'
 import './App.css';
 import moment from 'moment';
-const allData = geoJson.features;
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       layers: [''],
       allData: null,
-      date: new moment('2019-12-01').format('YYYY-MM-DD'),
+      date: new moment().format('YYYY-MM-DD'),
       countryData: null
     }
   };

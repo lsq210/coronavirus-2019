@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
 import GeojsonData from '../data/overall.json'
-import data1 from '../data/all.geojson';
+import testData from '../data/all.geojson';
 import { addHeatMap } from './layers/heatmap'
 import { addCluster } from './layers/cluster'
 import { addCategory } from './layers/category'
@@ -31,10 +31,12 @@ class Map extends Component {
       hash: true,
     });
     this.map.on('load', () => {
-      addHeatMap(this.map, originData);
-      addCluster(this.map, originData);
-      addCategory(this.map, originData);
+      // addHeatMap(this.map, originData);
+      // addCluster(this.map, originData);
+      addHeatMap(this.map, testData);
+      addCluster(this.map, testData);
     })
+    addCategory(this.map, testData);
   };
   componentDidUpdate(prevProps) {
     if (this.props.layers !== prevProps.layers) {
