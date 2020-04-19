@@ -19,12 +19,12 @@ class NumberBoard extends Component {
     // });
     // console.log(data);
     // this.setState({ data });
-    this.setState({ data: (await getData()).filter(e => e.date === this.props.date && !e.province) });
+    this.setState({ data: (await getData()).countryData.filter(e => e.date === this.props.date) });
     // this.setState({data: alldata.filter(e => e.country === '中国' && !e.province && e.date === this.props.date)});
   }
   async componentDidUpdate(prevPros) {
     if (this.props.date !== prevPros.date) {
-      this.setState({ data: (await getData()).filter(e => e.date === this.props.date && !e.province) });
+      this.setState({ data: (await getData()).countryData.filter(e => e.date === this.props.date) });
     }
 
   }

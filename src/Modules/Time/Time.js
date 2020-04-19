@@ -27,7 +27,6 @@ class Time extends Component {
     const { playerRef } = this.state;
     const player = new Player(playerRef.current, { dates, theme: 'dark' });
     player.on('change', onChange);
-    // console.log(a, b, duration.asDays());
   }
   render() {
     const { playerRef } = this.state;

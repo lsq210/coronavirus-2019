@@ -4,7 +4,7 @@ const dates = [];
 const startDate = moment('2019-12-01');
 const endDate = new moment();
 const duration = parseInt(moment.duration(endDate.diff(startDate)).asDays());
-for (var i = 0; i < duration; i++) {
+for (let i = 0; i < duration; i++) {
   const str = startDate.format('YYYY-MM-DD');
   dates.push(str);
   startDate.add(1, 'days');

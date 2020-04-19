@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
-import GeojsonData from '../data/all.geojson'
+import GeojsonData from '../data/overall.json'
+import data1 from '../data/all.geojson';
 import { addHeatMap } from './layers/heatmap'
 import { addCluster } from './layers/cluster'
 import { addCategory } from './layers/category'
@@ -9,9 +9,17 @@ import './Map.css'
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoibHNxMjEwIiwiYSI6ImNqZXd6NzVyYzB6b24ydnBzOWFhZ3FpNTQifQ.y4iy69PepyhrkJ98qjzykg';
 const allLayers = ['heatmap', 'colorfill', 'category', 'cluster'];
+const originData = {
+  type: "FeatureCollection",
+  features: GeojsonData.features.filter(e => e.properties.date === '2020-02-10')
+}
+
 class Map extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      data: null
+    }
   };
   componentDidMount() {
     mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
@@ -22,18 +30,25 @@ class Map extends Component {
       zoom: 1.5,
       hash: true,
     });
-    addHeatMap(this.map, GeojsonData);
-    addCluster(this.map, GeojsonData);
-    addCategory(this.map, GeojsonData);
-    // axios.get('https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv')
-    //   .then((response) => {
-    //     console.log(response.data)
-    //   })
+    this.map.on('load', () => {
+      addHeatMap(this.map, originData);
+      addCluster(this.map, originData);
+      addCategory(this.map, originData);
+    })
   };
   componentDidUpdate(prevProps) {
-    console.log('this.props.layers', this.props.layers);
     if (this.props.layers !== prevProps.layers) {
       this.changeLayer();
+    }
+    if (this.props.date !== prevProps.date) {
+      this.setState({
+        data: {
+          type: "FeatureCollection",
+          features: GeojsonData.features.filter(e => e.properties.date === this.props.date)
+        }
+      })
+      this.changeSource(this.state.data);
+      console.log(this.state.data)
     }
   };
   changeLayer() {
@@ -58,17 +73,15 @@ class Map extends Component {
     });
     this.map.triggerRepaint();
   }
-  addLayer(layer) {
-    switch (layer) {
-      case allLayers[0]:
-        addHeatMap(this.map);
-        return;
-      case allLayers[3]:
-        addCluster(this.map);
-        return;
-      default:
-        return;
+  changeSource(data) {
+    if (this.map.getLayer('heatmap')) {
+      this.map.removeLayer('heatmap');
     }
+    if (this.map.getSource('coronavirus')) {
+      this.map.removeSource('coronavirus');
+    }
+    addHeatMap(this.map, data);
+    console.log('layer', data);
   }
   render() {
     return (

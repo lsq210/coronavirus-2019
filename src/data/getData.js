@@ -13,10 +13,18 @@ function parseCSV(csv, dtype) {
     return o;
   });
 }
-const getCSV = async () => {
-  const { data: csv } = await axios.get('https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv')
-  let data_list = parseCSV(csv, { confirmed: Number, suspected: Number, cured: Number, dead: Number });
-  return data_list;
+const getData = async () => {
+  // 本地数据
+  const allData = require('./Wuhan-2019-nCoV.json');
+  // 调用实时接口
+  // const { data: csv } = await axios.get('https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv')
+  // let allData = parseCSV(csv, { confirmed: Number, suspected: Number, cured: Number, dead: Number });
+  return {
+    // 国家级数据
+    countryData: allData.filter(e => !e.province),
+    // 市级数据
+    cityData: allData.filter(e => e.province && !e.city)
+  };
 }
 
-export default getCSV;
+export default getData;

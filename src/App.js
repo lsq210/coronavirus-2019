@@ -17,7 +17,7 @@ class App extends Component {
     this.state = {
       layers: [''],
       allData: null,
-      date: new moment().format('YYYY-MM-DD'),
+      date: new moment('2019-12-01').format('YYYY-MM-DD'),
       countryData: null
     }
   };
@@ -31,7 +31,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Map layers={this.state.layers} data={allData.filter(e => e.properties.date === this.state.date && !e.properties.province)}></Map>
+        <Map layers={this.state.layers} date={this.state.date}></Map>
         <NumberBoard date={this.state.date}></NumberBoard>
         <ModuleContainer className="layers" title="图层选择">
           <Layers changeLayer={this.changeLayer}></Layers>

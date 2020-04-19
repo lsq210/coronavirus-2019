@@ -40,14 +40,13 @@ class Data extends Component {
     GlobleData: null
   };
   async componentDidMount() {
-    this.setState({ ChinaData: (await getData()).filter(e => e.province && !e.city && e.date === this.props.date) });
-    this.setState({ GlobleData: (await getData()).filter(e => e.date === this.props.date && !e.province) });
+    this.setState({ ChinaData: (await getData()).cityData.filter(e => e.date === this.props.date) });
+    this.setState({ GlobleData: (await getData()).countryData.filter(e => e.date === this.props.date) });
   }
   async componentDidUpdate(prevPros) {
     if (this.props.date !== prevPros.date) {
-      this.setState({ ChinaData: (await getData()).filter(e => e.province && !e.city && e.date === this.props.date) });
-      this.setState({ GlobleData: (await getData()).filter(e => e.date === this.props.date && !e.province) });
-      // console.log('if', this.state.ChinaData);
+      this.setState({ ChinaData: (await getData()).cityData.filter(e => e.date === this.props.date) });
+      this.setState({ GlobleData: (await getData()).countryData.filter(e => e.date === this.props.date) });
     }
   }
   onChange = e => {
