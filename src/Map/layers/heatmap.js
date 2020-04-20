@@ -1,4 +1,5 @@
-export function addHeatMap(map, GeojsonData) {
+const HEAT_MAP_RATE = 3;
+export function addHeatMap(map, GeojsonData, initialDate) {
   map.addSource('coronavirus', {
     'type': 'geojson',
     'data': GeojsonData
@@ -14,7 +15,7 @@ export function addHeatMap(map, GeojsonData) {
         'heatmap-weight': [
           'interpolate',
           ['linear'],
-          ['get', 'confirmedNum'],
+          ['get', 'confirmed'],
           0, 0,
           1000, 1
         ],
@@ -37,34 +38,28 @@ export function addHeatMap(map, GeojsonData) {
           1, "red"
         ],
         // 每个热力点的绘制半径
-        'heatmap-radius': [
-          'interpolate',
-          ['linear'],
-          ['zoom'],
-          0, 2,
-          1, 4,
-          2, 8,
-          3, 16,
-          4, 32,
-          5, 64,
-          6, 128,
-          7, 256,
-          8, 512,
-          9, 1024,
-          10, 2048,
-          11, 4096,
-          17, 131072
-        ],
+        'heatmap-radius':
+          [
+            'interpolate',
+            ['linear'],
+            // ['zoom'],
+            ['get', 'confirmed'],
+            0, 0 * HEAT_MAP_RATE,
+            1, 4 * HEAT_MAP_RATE,
+            10000, 10 * HEAT_MAP_RATE
+          ],
         // 热力图的透明度
-        'heatmap-opacity': [
-          'interpolate',
-          ['linear'],
-          ['zoom'],
-          5, 0.95,
-          6, 0.5
-        ]
+        // 'heatmap-opacity': [
+        //   'interpolate',
+        //   ['linear'],
+        //   ['zoom'],
+        //   5, 0.6,
+        //   6, 0.5
+        // ]
+        'heatmap-opacity': 0.6
       }
     },
     'waterway-label'
   );
+  map.setFilter('heatmap', ['==', 'date', initialDate]);
 };

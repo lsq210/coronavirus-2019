@@ -6,7 +6,8 @@ import moment from 'moment';
 // 数据dates的格式为 ["2020/2/9", "2020/2/10", "2020/2/11"...]
 const dates = [];
 const startDate = moment('2019-12-01');
-const endDate = new moment();
+// const endDate = new moment(); //实时
+const endDate = moment('2020-04-19');
 const duration = parseInt(moment.duration(endDate.diff(startDate)).asDays());
 for (var i = 0; i < duration; i++) {
   const str = startDate.format('YYYY-MM-DD');

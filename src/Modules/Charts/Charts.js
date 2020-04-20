@@ -20,8 +20,7 @@ class Charts extends Component {
     console.log('radio checked', e.target.value);
     this.setState({
       value: e.target.value,
-    });
-    this.getChartData();
+    }, () => this.getChartData());
   };
   async getChartData() {
     let data = [];

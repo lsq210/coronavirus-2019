@@ -49,17 +49,17 @@ class NumberBoard extends Component {
           <div className="confirm">
             <p className="title-confirm">确诊</p>
             <p className="number-confirm">{ChinaData.confirmed}</p>
-            <p className="globe-confirm">Globle:{GlobeData.confirmed}</p>
+            <p className="globe-confirm">全球：{GlobeData.confirmed}</p>
           </div>
           <div className="cure">
             <p className="title-cure">治愈</p>
             <p className="number-cure">{ChinaData.cured}</p>
-            <p className="globe-cure">Globle:{GlobeData.cured}</p>
+            <p className="globe-cure">全球：{GlobeData.cured}</p>
           </div>
           <div className="death">
             <p className="title-death">死亡</p>
             <p className="number-death">{ChinaData.dead}</p>
-            <p className="globe-death">Globle:{GlobeData.dead}</p>
+            <p className="globe-death">全球：{GlobeData.dead}</p>
           </div>
         </div>
       </div>

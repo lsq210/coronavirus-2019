@@ -40,8 +40,8 @@ class Data extends Component {
     GlobleData: null
   };
   async componentDidMount() {
-    this.setState({ ChinaData: (await getData()).cityData.filter(e => e.date === this.props.date) });
-    this.setState({ GlobleData: (await getData()).countryData.filter(e => e.date === this.props.date) });
+    this.setState({ ChinaData: (await getData()).cityData.filter(e => e.date === '2020-04-19') });
+    this.setState({ GlobleData: (await getData()).countryData.filter(e => e.date === '2020-04-19') });
   }
   async componentDidUpdate(prevPros) {
     if (this.props.date !== prevPros.date) {
@@ -50,7 +50,6 @@ class Data extends Component {
     }
   }
   onChange = e => {
-    console.log('radio checked', e.target.value);
     this.setState({
       value: e.target.value,
     });

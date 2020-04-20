@@ -16,7 +16,8 @@ class App extends Component {
     this.state = {
       layers: [''],
       allData: null,
-      date: new moment().format('YYYY-MM-DD'),
+      // date: new moment().format('YYYY-MM-DD'),//实时更新
+      date: '2020-04-18', //本地数据
       countryData: null
     }
   };
