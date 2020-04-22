@@ -1,11 +1,15 @@
-export function addCluster(map, GeojsonData) {
-  console.log('tianjia')
+export function addCluster(map, GeojsonData, property) {
   map.addSource('cluster', {
     type: 'geojson',
     data: GeojsonData,
     cluster: true, // 打开聚合
     clusterRadius: 50, // 设置聚合的半径
-    clusterProperties: { 'confirmedNum': ["+", ["get", "confirmedNum"]] } // 设置聚合过程中需要处理的数据
+    clusterProperties: {
+      confirmed: ['+', ['get', 'confirmed']],
+      exist: ['+', ['get', 'exist']],
+      cured: ['+', ['get', 'cured']],
+      dead: ['+', ['get', 'dead']]
+    } // 设置聚合过程中需要处理的数据
   });
   map.addLayer(
     {
@@ -15,11 +19,11 @@ export function addCluster(map, GeojsonData) {
       layout: {
         'visibility': 'none'
       },
-      filter: ['>=', ['get', 'confirmedNum'], 1],
+      filter: ['>=', ['get', property], 1],
       paint: {
         'circle-radius': [
           'step',
-          ['get', 'confirmedNum'],
+          ['get', property],
           10, 10,
           20, 1000,
           30, 5000,
@@ -27,11 +31,15 @@ export function addCluster(map, GeojsonData) {
         ],
         'circle-color': [
           'step',
-          ['get', 'confirmedNum'],
-          '#9ad5ff', 10,
-          '#9af6ff', 1000,
-          'cyan', 2000,
-          '#f1f075'
+          ['get', property],
+          '#9ad5ff', 0,
+          '#9af6ff', 20,
+          'cyan', 200,
+          'yellow', 400,
+          '#f1f075', 800,
+          '#f9b196', 1000,
+          '#f28cb1', 2000,
+          '#f28cb1'
         ]
       }
     },
@@ -39,12 +47,12 @@ export function addCluster(map, GeojsonData) {
   );
 
   map.addLayer({
-    id: `clusters-count`,
+    id: 'clusters-count',
     type: 'symbol',
-    source: `cluster`,
-    filter: ['>=', ['get', 'confirmedNum'], 1],
+    source: 'cluster',
+    filter: ['>=', ['get', property], 1],
     layout: {
-      'text-field': '{confirmedNum}',
+      'text-field': `{${property}}`,
       'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
       'text-size': 12,
       'text-allow-overlap': true,

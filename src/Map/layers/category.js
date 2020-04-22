@@ -3,39 +3,70 @@ export function addCategory(map, GeojsonData) {
 	var markers = {};
 	var markersOnScreen = {};
 	const colors = ['#ef5b56', '#61ffa1', '#c7d5dc', '#ff918e'];
-	map.on('load', () => {
-		// 添加Geojson的数据
-		map.addSource('category', {
-			type: 'geojson',
-			data: GeojsonData,
-			cluster: true,
-			clusterProperties: {
-				"confirmedNum": ["+", ["get", "confirmedNum"]],
-				"curesNum": ["+", ["get", "curesNum"]],
-				"deathsNum": ["+", ["get", "deathsNum"]],
-				"suspectedNum": ["+", ["get", "suspectedNum"]],
-			},
-			clusterRadius: 80
-		});
+	// map.on('load', () => {
+	// 	// 添加Geojson的数据
+	// 	map.addSource('category', {
+	// 		type: 'geojson',
+	// 		data: GeojsonData,
+	// 		cluster: true,
+	// 		clusterProperties: {
+	// 			"confirmedNum": ["+", ["get", "exist"]],
+	// 			"curesNum": ["+", ["get", "cured"]],
+	// 			"deathsNum": ["+", ["get", "dead"]],
+	// 		},
+	// 		clusterRadius: 100
+	// 	});
 
-		// 添加圆圈
-		map.addLayer({
-			'id': 'category',
-			'type': 'symbol',
-			'source': 'category',
-			layout: {
-				'visibility': 'none'
-			},
-		});
+	// 	// 添加圆圈
+	// 	map.addLayer({
+	// 		'id': 'category',
+	// 		'type': 'symbol',
+	// 		'source': 'category',
+	// 		layout: {
+	// 			'visibility': 'visible'
+	// 		},
+	// 	});
 
-		map.on('data', function (e) {
-			// 当数据源加载完毕之后，添加时间，并更新显示效果
-			if (e.sourceId !== 'category' || !e.isSourceLoaded) return;
-			map.on('move', updateMarkers);
-			map.on('moveend', updateMarkers);
-			updateMarkers();
-		});
+	// 	map.on('data', function (e) {
+	// 		// 当数据源加载完毕之后，添加时间，并更新显示效果
+	// 		if (e.sourceId !== 'category' || !e.isSourceLoaded) return;
+	// 		map.on('move', updateMarkers);
+	// 		map.on('moveend', updateMarkers);
+	// 		updateMarkers();
+	// 		console.log('update')
+	// 	});
+	// });
+	map.addSource('category', {
+		type: 'geojson',
+		data: GeojsonData,
+		cluster: true,
+		clusterProperties: {
+			"confirmedNum": ["+", ["get", "exist"]],
+			"curesNum": ["+", ["get", "cured"]],
+			"deathsNum": ["+", ["get", "dead"]],
+		},
+		clusterRadius: 100
 	});
+
+	// 添加圆圈
+	map.addLayer({
+		'id': 'category',
+		'type': 'symbol',
+		'source': 'category',
+		layout: {
+			'visibility': 'visible'
+		},
+	});
+
+	map.on('data', function (e) {
+		// 当数据源加载完毕之后，添加时间，并更新显示效果
+		if (e.sourceId !== 'category' || !e.isSourceLoaded) return;
+		map.on('move', updateMarkers);
+		map.on('moveend', updateMarkers);
+		updateMarkers();
+		console.log('update')
+	});
+
 	function updateMarkers() {
 		var MarkersToDisplay = {};
 		// 获取当前屏幕可见的数据
@@ -77,8 +108,7 @@ export function addCategory(map, GeojsonData) {
 		var counts = [
 			props.confirmedNum,
 			props.curesNum,
-			props.deathsNum,
-			props.suspectedNum
+			props.deathsNum
 		];
 		var total = 0;
 		for (var i = 0; i < counts.length; i++) {

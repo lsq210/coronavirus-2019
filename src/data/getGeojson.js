@@ -6,20 +6,14 @@ function parseCSV(csv, dtype) {
   var keys = lines[0].split(',');
   return lines.slice(1).map(function (line) {
     var values = line.split(',');
-    // var o = {};
-    // keys.forEach(function (key, index) {
-    //   key = key.trim();
-    //   var type = dtype[key];
-    //   o[key] = type ? type(values[index]) : values[index];
-    // });
-    // return o;
     return {
       type: 'Feature',
       properties: {
         date: moment(values[0]).format('YYYY-MM-DD'),
-        confirmed: Number(values[3]) - Number(values[4]) - Number(values[5]),
+        confirmed: Number(values[3]),
         cured: Number(values[4]),
-        dead: Number(values[5])
+        dead: Number(values[5]),
+        exist: Number(values[3]) - Number(values[4]) - Number(values[5])
       },
       geometry: {
         type: 'Point',
@@ -29,8 +23,6 @@ function parseCSV(csv, dtype) {
   });
 }
 const getGeojson = async () => {
-  // 调用实时接口
-  // const { data: csv } = await axios.get('https://raw.githubusercontent.com/canghailan/Wuhan-2019-nCoV/master/Wuhan-2019-nCoV.csv')
   // 本地数据
   const { data: csv } = await axios.get('/data/time-series.csv')
   let geojsonData = {

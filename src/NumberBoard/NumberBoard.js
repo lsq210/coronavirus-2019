@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import getData from '../data/getData';
-// import alldata from '../data/Wuhan-2019-nCoV.json';
-import axios from 'axios';
 import './NumberBoard.scss'
 class NumberBoard extends Component {
   constructor(props) {
@@ -11,16 +9,7 @@ class NumberBoard extends Component {
     }
   }
   async componentDidMount() {
-    // const { data } = await axios.get('http://api.tianapi.com/txapi/ncov/index', {
-    //   params: {
-    //     key: 'a6cf2dc35efb92e1b9160dab78472e88',
-    //     date: this.props.date
-    //   }
-    // });
-    // console.log(data);
-    // this.setState({ data });
     this.setState({ data: (await getData()).countryData.filter(e => e.date === this.props.date) });
-    // this.setState({data: alldata.filter(e => e.country === '中国' && !e.province && e.date === this.props.date)});
   }
   async componentDidUpdate(prevPros) {
     if (this.props.date !== prevPros.date) {
@@ -44,7 +33,7 @@ class NumberBoard extends Component {
     }
     return ChinaData && GlobeData && (
       <div className="number-board">
-        <span>新型冠状病毒疫情地图</span>
+        <span>新型冠状病毒疫情地图 {this.props.date}</span>
         <div className="board-container">
           <div className="confirm">
             <p className="title-confirm">确诊</p>

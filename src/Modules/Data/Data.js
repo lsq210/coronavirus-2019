@@ -95,7 +95,7 @@ class Data extends Component {
           dataSource={data}
           pagination={false}
           size={"small"}
-          scroll={{ y: 160 }}
+          scroll={{ y: 170 }}
           rowClassName={() => 'trow'} />
       </div>
     )

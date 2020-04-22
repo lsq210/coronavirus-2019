@@ -1,21 +1,21 @@
 const HEAT_MAP_RATE = 3;
-export function addHeatMap(map, GeojsonData, initialDate) {
-  map.addSource('coronavirus', {
-    'type': 'geojson',
-    'data': GeojsonData
+export function addHeatMap(map, GeojsonData, property) {
+  map.addSource('heatmap', {
+    type: 'geojson',
+    data: GeojsonData
   });
   map.addLayer(
     {
       'id': 'heatmap',
       'type': 'heatmap',
-      'source': 'coronavirus',
+      'source': 'heatmap',
       // 'maxzoom': 9,
       'paint': {
         // 热力权重，适用于集合图
         'heatmap-weight': [
           'interpolate',
           ['linear'],
-          ['get', 'confirmed'],
+          ['get', property],
           0, 0,
           1000, 1
         ],
@@ -42,12 +42,26 @@ export function addHeatMap(map, GeojsonData, initialDate) {
           [
             'interpolate',
             ['linear'],
-            // ['zoom'],
-            ['get', 'confirmed'],
-            0, 0 * HEAT_MAP_RATE,
+            ['zoom'],
+            // ['get', 'confirmed'],
+            // 0, 0 * HEAT_MAP_RATE,
+            // 1, 4 * HEAT_MAP_RATE,
+            // 10000, 10 * HEAT_MAP_RATE
+            0, 2 * HEAT_MAP_RATE,
             1, 4 * HEAT_MAP_RATE,
-            10000, 10 * HEAT_MAP_RATE
+            2, 8 * HEAT_MAP_RATE,
+            3, 16 * HEAT_MAP_RATE,
+            4, 32 * HEAT_MAP_RATE,
+            5, 64 * HEAT_MAP_RATE,
+            6, 128 * HEAT_MAP_RATE,
+            7, 256 * HEAT_MAP_RATE,
+            8, 512 * HEAT_MAP_RATE,
+            9, 1024 * HEAT_MAP_RATE,
+            10, 2048 * HEAT_MAP_RATE,
+            11, 4096 * HEAT_MAP_RATE,
+            17, 131072 * HEAT_MAP_RATE
           ],
+
         // 热力图的透明度
         // 'heatmap-opacity': [
         //   'interpolate',
@@ -61,5 +75,4 @@ export function addHeatMap(map, GeojsonData, initialDate) {
     },
     'waterway-label'
   );
-  map.setFilter('heatmap', ['==', 'date', initialDate]);
 };

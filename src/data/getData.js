@@ -1,6 +1,4 @@
 import axios from 'axios';
-// import allData from './Wuhan-2019-nCoV.json';
-// import csv from './Wuhan-2019-nCoV.csv'
 
 function parseCSV(csv, dtype) {
   var lines = csv.split('\n');
@@ -22,8 +20,6 @@ const getData = async () => {
   // 本地数据
   const { data: csv } = await axios.get('/data/Wuhan-2019-nCoV.csv')
   let allData = parseCSV(csv, { confirmed: Number, cured: Number, dead: Number });
-  // console.log('csv', csv)
-  // console.log('allData', allData)
   return {
     // 国家级数据
     countryData: allData.filter(e => !e.province),

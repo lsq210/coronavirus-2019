@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import mapboxgl from 'mapbox-gl';
-import GeojsonData from '../data/overall.json'
-import testData from '../data/all.geojson';
-import { addHeatMap } from './layers/heatmap'
-import { addCluster } from './layers/cluster'
-import { addCategory } from './layers/category'
-import getGeojson from '../data/getGeojson'
-import './Map.css'
+import { addHeatMap } from './layers/heatmap';
+import { addCluster } from './layers/cluster';
+import { addCategory } from './layers/category';
+import getGeojson from '../data/getGeojson';
+import './Map.css';
 
 const MAPBOX_ACCESS_TOKEN = 'pk.eyJ1IjoibHNxMjEwIiwiYSI6ImNqZXd6NzVyYzB6b24ydnBzOWFhZ3FpNTQifQ.y4iy69PepyhrkJ98qjzykg';
-const allLayers = ['heatmap', 'colorfill', 'category', 'cluster'];
+const layerOptions = ['heatmap', 'category', 'cluster'];
 var geojson = null;
 class Map extends Component {
   constructor(props) {
@@ -20,6 +18,10 @@ class Map extends Component {
   };
   async componentDidMount() {
     geojson = await (getGeojson());
+    const initialData = {
+      type: geojson.type,
+      features: geojson.features.filter(e => e.properties.date === this.props.date)
+    }
     mapboxgl.accessToken = MAPBOX_ACCESS_TOKEN;
     this.map = new mapboxgl.Map({
       container: 'map',
@@ -29,54 +31,79 @@ class Map extends Component {
       hash: true,
     });
     this.map.on('load', () => {
-      // addHeatMap(this.map, originData);
-      // addCluster(this.map, originData);
-      // addHeatMap(this.map, {
-      //   type: 'FeatureCollection',
-      //   features: originFeatures
-      // });
-      addHeatMap(this.map, geojson, this.props.date);
-      // addCluster(this.map, testData);
+      addHeatMap(this.map, initialData, 'exist');
+      addCluster(this.map, initialData, 'exist');
+      addCategory(this.map, initialData);
     })
-    // addCategory(this.map, testData);
   };
   componentDidUpdate(prevProps) {
-    if (this.props.layers !== prevProps.layers) {
+    const { layers, property, date } = this.props;
+    if (layers !== prevProps.layers) {
       this.changeLayer();
     }
-    if (this.props.date !== prevProps.date) {
-      this.map.setFilter('heatmap', ['==', 'date', this.props.date]);
+    if (property !== prevProps.property) {
+      this.changeProperty();
+    }
+    if (date !== prevProps.date) {
+      const newData = {
+        type: geojson.type,
+        features: geojson.features.filter(e => e.properties.date === date)
+      };
+      this.map.getSource('heatmap').setData(newData);
+      this.map.getSource('cluster').setData(newData);
+      this.map.getSource('category').setData(newData);
+      console.log(this.map.getSource('category'))
     }
   };
   changeLayer() {
-    const { layers } = this.props
-    allLayers.forEach(layer => {
+    const layers = this.props.layers;
+    const map = this.map;
+    layerOptions.forEach(layer => {
       // 图层未被选中
       if (layers.findIndex(l => l === layer) === -1) {
         if (layer === 'cluster') {
-          this.map.setLayoutProperty('cluster', 'visibility', 'none');
-          this.map.setLayoutProperty('clusters-count', 'visibility', 'none');
+          map.setLayoutProperty('cluster', 'visibility', 'none');
+          map.setLayoutProperty('clusters-count', 'visibility', 'none');
         } else {
-          this.map.setLayoutProperty(layer, 'visibility', 'none');
+          map.setLayoutProperty(layer, 'visibility', 'none');
         }
       } else { // 图层被选中
         if (layer === 'cluster') {
-          this.map.setLayoutProperty('cluster', 'visibility', 'visible');
-          this.map.setLayoutProperty('clusters-count', 'visibility', 'visible');
+          map.setLayoutProperty('cluster', 'visibility', 'visible');
+          map.setLayoutProperty('clusters-count', 'visibility', 'visible');
         } else {
-          this.map.setLayoutProperty(layer, 'visibility', 'visible');
+          map.setLayoutProperty(layer, 'visibility', 'visible');
         }
       }
     });
   }
-  changeSource(data) {
-    if (this.map.getLayer('heatmap')) {
-      this.map.removeLayer('heatmap');
+  changeProperty() {
+    const { property, date } = this.props;
+    const layer = property.split(',')[0];
+    const value = property.split(',')[1];
+    const map = this.map;
+    const newData = {
+      type: geojson.type,
+      features: geojson.features.filter(e => e.properties.date === date)
+    };
+    console.log('changeProperty', property);
+    switch (layer) {
+      case 'heatmap':
+        map.removeLayer('heatmap');
+        map.removeSource('heatmap');
+        addHeatMap(map, newData, value);
+        return;
+      case 'cluster':
+        map.removeLayer('cluster');
+        map.removeLayer('clusters-count');
+        map.removeSource('cluster');
+        addCluster(map, newData, value);
+        map.setLayoutProperty('cluster', 'visibility', 'visible');
+        map.setLayoutProperty('clusters-count', 'visibility', 'visible');
+        return;
+      default:
+        return;
     }
-    if (this.map.getSource('coronavirus')) {
-      this.map.removeSource('coronavirus');
-    }
-    addHeatMap(this.map, data);
   }
   render() {
     return (
