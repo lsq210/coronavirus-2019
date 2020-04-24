@@ -10,7 +10,7 @@ export function addCategory(map, GeojsonData) {
 	// 		data: GeojsonData,
 	// 		cluster: true,
 	// 		clusterProperties: {
-	// 			"confirmedNum": ["+", ["get", "exist"]],
+	// 			"existNum": ["+", ["get", "exist"]],
 	// 			"curesNum": ["+", ["get", "cured"]],
 	// 			"deathsNum": ["+", ["get", "dead"]],
 	// 		},
@@ -41,11 +41,12 @@ export function addCategory(map, GeojsonData) {
 		data: GeojsonData,
 		cluster: true,
 		clusterProperties: {
-			"confirmedNum": ["+", ["get", "exist"]],
+			"existNum": ["+", ["get", "exist"]],
 			"curesNum": ["+", ["get", "cured"]],
 			"deathsNum": ["+", ["get", "dead"]],
+			"confirmedNum": ["+", ["get", "confirmed"]],
 		},
-		clusterRadius: 100
+		clusterRadius: 80
 	});
 
 	// 添加圆圈
@@ -56,6 +57,7 @@ export function addCategory(map, GeojsonData) {
 		layout: {
 			'visibility': 'visible'
 		},
+		filter: ['>=', ['get', 'confirmedNum'], 1]
 	});
 
 	map.on('data', function (e) {
@@ -106,7 +108,7 @@ export function addCategory(map, GeojsonData) {
 	function createChart(props) {
 		var offsets = [];
 		var counts = [
-			props.confirmedNum,
+			props.existNum,
 			props.curesNum,
 			props.deathsNum
 		];

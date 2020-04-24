@@ -2,19 +2,12 @@ import React, { Component } from 'react';
 import { Checkbox, Row, Col, Radio } from 'antd';
 import './Layers.scss';
 
-// const options = [
-//   { label: '热力图', value: 'heatmap' },
-//   { label: '分类集合', value: 'category' },
-//   { label: '集合', value: 'cluster' },
-// ];
-
 class Layers extends Component {
   state = {
     disabled: {
       heatmap: false,
       cluster: true
-    },
-    radioValue: '现有'
+    }
   }
   changeLayer = (checkedValues) => {
     this.setState({
@@ -23,11 +16,9 @@ class Layers extends Component {
         cluster: checkedValues.findIndex(item => item === 'cluster') === -1
       }
     })
-    this.props.changeLayer(checkedValues, this.state.radioValue);
+    this.props.changeLayer(checkedValues);
   }
   changeHeatProperty = (e) => {
-    console.log(e.target);
-    // this.setState({ radioValue: e.target.value });
     this.props.changeProperty(`heatmap,${e.target.value}`);
   }
   changeClusterProperty = (e) => {
@@ -37,7 +28,7 @@ class Layers extends Component {
     const { disabled } = this.state;
     return (
       <div className="layer-container">
-        <Checkbox.Group defaultValue={['heatmap']} onChange={this.changeLayer}>
+        <Checkbox.Group defaultValue={['heatmap', 'category']} onChange={this.changeLayer}>
           <Row>
             <Checkbox value="heatmap">热力图</Checkbox>
             <Radio.Group

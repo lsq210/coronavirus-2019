@@ -20,6 +20,7 @@
     th {
       background: transparent !important;
       color: #fff !important;
+      border-bottom: 0.5px solid #f0f0f0!important;
     }
   }
 }
@@ -27,6 +28,7 @@
   tr {
     td {
       background: transparent !important;
+      border-bottom: 0.5px solid #d4d4d498!important;
     }
   }
 }
@@ -36,4 +38,7 @@
   &:hover {
     background: rgba(100,191,255,.3) !important;
   }
+}
+.ant-table-filter-column {
+  margin: -16px -16px!important;
 }

@@ -38,8 +38,8 @@ export function addCluster(map, GeojsonData, property) {
           'yellow', 400,
           '#f1f075', 800,
           '#f9b196', 1000,
-          '#f28cb1', 2000,
-          '#f28cb1'
+          '#f28cb1', 50000,
+          'red'
         ]
       }
     },

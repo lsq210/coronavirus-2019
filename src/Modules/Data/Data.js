@@ -1,43 +1,18 @@
 import React, { Component } from 'react';
-import { Table, Radio } from 'antd';
+import { Table, Radio, Input, Button } from 'antd';
 import getData from '../../data/getData'
 import 'antd/dist/antd.css';
 import './Data.scss'
-
-
-const columns = [
-  {
-    title: '地区',
-    dataIndex: 'name',
-    width: 10
-  },
-  {
-    title: '确诊',
-    dataIndex: 'confirm',
-    width: 10
-  },
-  {
-    title: '治愈',
-    dataIndex: 'cure',
-    width: 10
-  },
-  {
-    title: '死亡',
-    dataIndex: 'death',
-    width: 10
-  },
-  {
-    title: '现有病例',
-    dataIndex: 'current',
-    width: 10
-  },
-];
+import Highlighter from 'react-highlight-words';
+import { SearchOutlined } from '@ant-design/icons';
 
 class Data extends Component {
   state = {
     value: 1,
     ChinaData: null,
-    GlobleData: null
+    GlobleData: null,
+    searchText: '',
+    searchedColumn: '',
   };
   async componentDidMount() {
     this.setState({ ChinaData: (await getData()).cityData.filter(e => e.date === '2020-04-19') });
@@ -54,8 +29,115 @@ class Data extends Component {
       value: e.target.value,
     });
   };
+  getColumnSearchProps = dataIndex => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+      <div style={{ padding: 8 }}>
+        <Input
+          ref={node => {
+            this.searchInput = node;
+          }}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{ width: 188, marginBottom: 8, display: 'block' }}
+        />
+        <Button
+          type="primary"
+          onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+          icon={<SearchOutlined />}
+          size="small"
+          style={{ width: 90, marginRight: 8 }}
+        >
+          Search
+        </Button>
+        <Button onClick={() => this.handleReset(clearFilters)} size="small" style={{ width: 90 }}>
+          Reset
+        </Button>
+      </div>
+    ),
+    filterIcon: filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />,
+    onFilter: (value, record) =>
+      record[dataIndex]
+        .toString()
+        .toLowerCase()
+        .includes(value.toLowerCase()),
+    onFilterDropdownVisibleChange: visible => {
+      if (visible) {
+        setTimeout(() => this.searchInput.select());
+      }
+    },
+    render: text =>
+      this.state.searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{ backgroundColor: '#ffc069', padding: 0 }}
+          searchWords={[this.state.searchText]}
+          autoEscape
+          textToHighlight={text.toString()}
+        />
+      ) : (
+          text
+        ),
+  });
+  handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    this.setState({
+      searchText: selectedKeys[0],
+      searchedColumn: dataIndex,
+    });
+  };
 
+  handleReset = clearFilters => {
+    clearFilters();
+    this.setState({ searchText: '' });
+  };
   render() {
+    const columns = [
+      {
+        title: '地区',
+        dataIndex: 'name',
+        key: 'name',
+        width: '24%',
+        ...this.getColumnSearchProps('name'),
+      },
+      {
+        title: '确诊',
+        dataIndex: 'confirm',
+        width: '19%',
+        sorter: {
+          compare: (a, b) => a.confirm - b.confirm,
+          multiple: 1,
+        },
+        defaultSortOrder: 'descend'
+      },
+      {
+        title: '治愈',
+        dataIndex: 'cure',
+        width: '19%',
+        sorter: {
+          compare: (a, b) => a.cure - b.cure,
+          multiple: 2,
+        },
+      },
+      {
+        title: '死亡',
+        dataIndex: 'death',
+        width: '19%',
+        sorter: {
+          compare: (a, b) => a.death - b.death,
+          multiple: 3,
+        },
+      },
+      {
+        title: '现有',
+        dataIndex: 'current',
+        width: '19%',
+        sorter: {
+          compare: (a, b) => a.current - b.current,
+          multiple: 4,
+        },
+      },
+    ];
     const { ChinaData, GlobleData, value } = this.state
     const data = [];
     if (value === 1 && ChinaData) {
@@ -95,7 +177,7 @@ class Data extends Component {
           dataSource={data}
           pagination={false}
           size={"small"}
-          scroll={{ y: 170 }}
+          scroll={{ y: 160 }}
           rowClassName={() => 'trow'} />
       </div>
     )
