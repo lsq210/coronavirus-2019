@@ -17,7 +17,6 @@ class Charts extends Component {
     this.getChartData();
   }
   onChange = e => {
-    console.log('radio checked', e.target.value);
     this.setState({
       value: e.target.value,
     }, () => this.getChartData());

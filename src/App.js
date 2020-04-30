@@ -28,7 +28,6 @@ class App extends Component {
   }
   changeTime = (index, value) => {
     this.setState({ date: moment(value, 'YYYY/MM/DD').format('YYYY-MM-DD') });
-    // console.log(this.state.date);
   }
   render() {
     return (

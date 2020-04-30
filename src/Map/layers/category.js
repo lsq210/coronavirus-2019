@@ -3,39 +3,6 @@ export function addCategory(map, GeojsonData) {
 	var markers = {};
 	var markersOnScreen = {};
 	const colors = ['#ef5b56', '#61ffa1', '#c7d5dc', '#ff918e'];
-	// map.on('load', () => {
-	// 	// 添加Geojson的数据
-	// 	map.addSource('category', {
-	// 		type: 'geojson',
-	// 		data: GeojsonData,
-	// 		cluster: true,
-	// 		clusterProperties: {
-	// 			"existNum": ["+", ["get", "exist"]],
-	// 			"curesNum": ["+", ["get", "cured"]],
-	// 			"deathsNum": ["+", ["get", "dead"]],
-	// 		},
-	// 		clusterRadius: 100
-	// 	});
-
-	// 	// 添加圆圈
-	// 	map.addLayer({
-	// 		'id': 'category',
-	// 		'type': 'symbol',
-	// 		'source': 'category',
-	// 		layout: {
-	// 			'visibility': 'visible'
-	// 		},
-	// 	});
-
-	// 	map.on('data', function (e) {
-	// 		// 当数据源加载完毕之后，添加时间，并更新显示效果
-	// 		if (e.sourceId !== 'category' || !e.isSourceLoaded) return;
-	// 		map.on('move', updateMarkers);
-	// 		map.on('moveend', updateMarkers);
-	// 		updateMarkers();
-	// 		console.log('update')
-	// 	});
-	// });
 	map.addSource('category', {
 		type: 'geojson',
 		data: GeojsonData,
@@ -66,7 +33,6 @@ export function addCategory(map, GeojsonData) {
 		map.on('move', updateMarkers);
 		map.on('moveend', updateMarkers);
 		updateMarkers();
-		console.log('update')
 	});
 
 	function updateMarkers() {

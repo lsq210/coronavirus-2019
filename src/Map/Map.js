@@ -52,7 +52,6 @@ class Map extends Component {
       this.map.getSource('heatmap').setData(newData);
       this.map.getSource('cluster').setData(newData);
       this.map.getSource('category').setData(newData);
-      console.log(this.map.getSource('category'))
     }
   };
   changeLayer() {
@@ -86,7 +85,6 @@ class Map extends Component {
       type: geojson.type,
       features: geojson.features.filter(e => e.properties.date === date)
     };
-    console.log('changeProperty', property);
     switch (layer) {
       case 'heatmap':
         map.removeLayer('heatmap');
